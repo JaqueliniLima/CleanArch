@@ -12,7 +12,7 @@ export default class CouponRepositoryMemory implements CouponRepository{
         ]
     }
 
-    findByCode(code: string): Coupon {
+    async findByCode(code: string): Promise<Coupon> {
         const coupon = this.coupons.find(coupon => coupon.code === code);
         if(!coupon) throw new Error("Coupon not found");
         return coupon;
