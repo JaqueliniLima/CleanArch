@@ -10,16 +10,17 @@ export default class Order {
     private coupon: Coupon | undefined;
     private freight: number;
     code: OrderCode;
+    status: string;
     
     constructor (cpf: string, readonly issueDate: Date = new Date(), readonly sequence: number = 1) {
         this.cpf = new Cpf(cpf);
         this.orderItems = [];
         this.freight = 0;
         this.code = new OrderCode(issueDate, sequence);
+        this.status = "pending";
     }
     
     addItem(item: Item, quantity: number) {
-        this.freight += item.getFreight() * quantity;
         this.orderItems.push(new OrderItem(item.idItem, item.price, quantity));
     }
 
@@ -30,6 +31,10 @@ export default class Order {
 
     getFreight () {
         return this.freight;
+    }
+
+    setFreight(freight: number){
+        this.freight = freight;
     }
 
     getCpf () {
@@ -46,6 +51,10 @@ export default class Order {
 
     getOrderItems () {
         return this.orderItems;
+    }
+
+    cancel(){
+        this.status = "cancelled";
     }
 
     getTotal(){
