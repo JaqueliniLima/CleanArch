@@ -5,15 +5,20 @@ import DatabaseRepositoryFactory from "../../src/checkout/infra/factory/Database
 import EventBus from "../../src/shared/infra/event/EventBus";
 import OrderPlacedStockHandler from "../../src/stock/domain/handler/OrderPlacedStockHandler";
 import StockRepositoryDatabase from "../../src/stock/infra/database/StockRepositoryDatabase";
+import CancelOrder from "../../src/checkout/application/usecase/CancelOrder";
+import OrderCancelledStockHandler from "../../src/stock/domain/handler/OrderCancelledStockHandler";
 
 let placeOrder: PlaceOrder;
+let cancelOrder: CancelOrder;
 
 beforeEach(function () {
     const databaseConnection = new DatabaseConnectionAdapter();
     const databaseRepositoryFactory = new DatabaseRepositoryFactory(databaseConnection);
     const eventBus = new EventBus();
     eventBus.subscribe("OrderPlaced", new OrderPlacedStockHandler(new StockRepositoryDatabase(databaseConnection)));
+    eventBus.subscribe("OrderCancelled", new OrderCancelledStockHandler(new StockRepositoryDatabase(databaseConnection)));
     placeOrder = new PlaceOrder(databaseRepositoryFactory, eventBus);
+    cancelOrder = new CancelOrder(databaseRepositoryFactory, eventBus);
 });
 
 test("Deve fazer um pedido", async function () {
@@ -37,5 +42,5 @@ test("Deve fazer um pedido", async function () {
     "VALE20");
     
     const output = await placeOrder.execute(input);
-    expect(output.total).toBe(4872);
+    await cancelOrder.execute(output.code);
 });
