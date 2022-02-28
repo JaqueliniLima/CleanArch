@@ -1,7 +1,8 @@
+import DatabaseConnection from "../../../shared/infra/database/DatabaseConnection";
 import OrderDAO from "../../application/query/OrderDAO";
 import OrderDTO from "../../application/query/OrderDTO";
 import OrderItemDTO from "../../application/query/OrderItemDTO";
-import DatabaseConnection from "../database/DatabaseConnection";
+
 
 export default class OrderDAODatabase implements OrderDAO{
     constructor(readonly databaseConnection: DatabaseConnection){

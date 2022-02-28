@@ -1,5 +1,4 @@
 import OrderCancelled from "../../../shared/domain/event/OrderCancelled";
-import OrderPlaced from "../../../shared/domain/event/OrderPlaced";
 import Handler from "../../../shared/domain/handler/Handler";
 import StockEntry from "../entity/StockEntry";
 import StockRepository from "../repository/StockRepository";
