@@ -2,7 +2,7 @@ import DatabaseConnection from "../../infra/database/DatabaseConnection";
 import GetOrderOutput from "../dto/GetOrderOutput";
 import OrderDAO from "./OrderDAO";
 
-export default class GetOrder{
+export default class GetOrders{
 
     constructor(readonly orderDAO: OrderDAO){
     }
